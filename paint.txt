@@ -1,0 +1,183 @@
+// A program in c using allegro gaming library to develop a simple version of paint which will help to draw some basic shapes.
+#include <allegro.h>
+void init();
+void deinit();
+void menu();
+void toolbox();
+void drawshape();
+void mouseinfo();
+int cursor_x,cursor_y;
+int cursor_p,cursor_q;
+void drawhline();
+void slightline();
+void slightline2();
+void drawvline();
+void drawrectangle();
+void drawcircle();
+void eraser();
+
+int main() {
+	init();
+	install_mouse();
+	show_mouse(screen);
+	textout_ex( screen, font, "press esc for exit ", 870, 15, makecol( 255,255,255), makecol( 0, 0, 0) ); 
+    textout_ex( screen, font, "press LEFT click to select tool & RIGHT click to draw shape ", 150, 15, makecol( 255,255,255), makecol( 0, 0, 0) ); 	
+    set_window_title("paint using allegro----akshay");
+	while (!key[KEY_ESC]) {
+          menu();
+          toolbox();
+          
+          drawshape();
+          
+          
+		/* put your code here */
+	}
+
+	deinit();
+	return 0;
+}
+END_OF_MAIN()
+
+void init() {
+	int depth, res;
+	allegro_init();
+	depth = desktop_color_depth();
+	if (depth == 0) depth = 32;
+	set_color_depth(depth);
+	res = set_gfx_mode(GFX_AUTODETECT_WINDOWED, 1024, 640, 0, 0);
+	if (res != 0) {
+		allegro_message(allegro_error);
+		exit(-1);
+	}
+
+	install_timer();
+	install_keyboard();
+	install_mouse();
+	/* add other initializations here */
+}
+
+void deinit() {
+	clear_keybuf();
+	/* add other deinitializations here */
+}
+void menu()
+{ line(screen,0,30,1024,30,makecol(255,255,255));
+ textout_ex( screen, font, "new ", 30, 15, makecol( 255,255,255), makecol( 0, 0, 0) );
+ //textout_ex( screen, font, "exit ", 90, 15, makecol( 255,255,255), makecol( 0, 0, 0) );
+}
+void toolbox()
+{ line(screen,140,30,140,640,makecol(255,255,255));
+line(screen,140,580,1024,580,makecol(255,255,255));
+line(screen,0,60,140,60,makecol(255,255,255));
+ textout_ex( screen, font, "TOOL BOX ", 40, 45, makecol( 255,255,255), makecol( 0, 0, 0) );
+  textout_ex( screen, font, "Line ", 50, 65, makecol( 255,255,255), makecol( 0, 0, 0) );
+  line(screen,30,90,110,90,makecol(255,255,255));
+  line(screen,30,110,110,120,makecol(255,255,255));
+  line(screen,30,150,110,140,makecol(255,255,255));
+  line(screen,70,170,70,210,makecol(255,255,255));
+  line(screen,0,220,140,220,makecol(255,255,255));
+    
+    textout_ex( screen, font, "Rectangle ", 40, 230, makecol( 255,255,255), makecol( 0, 0, 0) );
+    rect( screen, 30, 280, 110, 250, makecol( 255, 255, 255));
+  line(screen,0,290,140,290,makecol(255,255,255));
+  
+ textout_ex( screen, font, "Circle ", 40, 300, makecol( 255,255,255), makecol( 0, 0, 0) );
+ circle( screen, 70, 350, 20, makecol( 255, 255,255)); 
+   line(screen,0,380,140,380,makecol(255,255,255));
+   
+ textout_ex( screen, font, "Eraser ", 40, 390, makecol( 255,255,255), makecol( 0, 0, 0) ); 
+  rect( screen, 40, 440, 80, 410, makecol( 255, 255, 255)); 
+}
+void mouseinfo()
+{ if(mouse_b & 1)
+{ cursor_x =mouse_x;
+  cursor_y =mouse_y;
+}
+}
+void drawshape()
+{   
+     mouseinfo();
+  
+     if(cursor_x>=25 && cursor_x<=120) 
+      if(cursor_y>=85 && cursor_y<=95)
+      {
+        drawhline();
+        }
+if(cursor_x>=25 && cursor_x<=120)
+if(cursor_y>=105 && cursor_y<=125)
+   {
+   
+    slightline();
+
+}
+if(cursor_x>=25 && cursor_x<=120)
+if(cursor_y>=135 && cursor_y<=155)
+   {
+   
+    slightline2();
+
+}
+if(cursor_x>=65 && cursor_x<=75)
+if(cursor_y>=165 && cursor_y<=215)
+   {
+   
+   drawvline();
+
+}
+if(cursor_x>=25 && cursor_x<=120)
+if(cursor_y>=240 && cursor_y<=280)
+   {
+   
+    drawrectangle();
+
+}
+if(cursor_x>=60 && cursor_x<=85)
+if(cursor_y>=335 && cursor_y<=365)
+   {
+   
+  drawcircle();
+
+}
+if(cursor_x>=40 && cursor_x<=80)
+if(cursor_y>=410 && cursor_y<=440)
+   {
+   
+    eraser();
+
+}
+if(cursor_x>=25 && cursor_x<=45) 
+      if(cursor_y>=5 && cursor_y<=25)
+      {
+         rectfill( screen, 140, 580, 1024, 30, makecol( 0,0,0));
+         }
+        }
+void drawhline()
+{ if(mouse_b & 2)
+
+ line( screen, mouse_x, mouse_y, mouse_x+200, mouse_y, makecol( 255, 255, 255));
+}
+void slightline()
+{if(mouse_b & 2)
+  line( screen, mouse_x, mouse_y, mouse_x+200, mouse_y+200, makecol( 255, 255, 255));
+}
+void slightline2()
+{if(mouse_b & 2)
+
+  line( screen, mouse_x, mouse_y, mouse_x-200, mouse_y+200, makecol( 255, 255, 255));
+}
+void drawvline()
+{ if(mouse_b & 2)
+ line( screen, mouse_x, mouse_y, mouse_x, mouse_y+200, makecol( 255, 255, 255));
+}
+void drawrectangle()
+{if(mouse_b & 2)
+rect( screen, mouse_x, mouse_y, mouse_x+200, mouse_y+200, makecol( 255, 255, 255));
+}
+void drawcircle()
+{ if(mouse_b & 2)
+ circle( screen, mouse_x, mouse_y, 50, makecol( 255, 255,255));
+}
+void eraser()
+{ if(mouse_b & 2)
+circlefill( screen, mouse_x, mouse_y, 20, makecol( 0,0,0));
+ }
